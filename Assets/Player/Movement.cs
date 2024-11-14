@@ -15,10 +15,13 @@ public class Movement : MonoBehaviour
     private Rigidbody2D _rb;
     [SerializeField] public float moveSpeed;
 
+    private Animator _animator;
+
     private void Awake()
     {
         _playerController = new PlayerController();
         _rb = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>();
     }
 
     private void OnEnable()
@@ -41,6 +44,12 @@ public class Movement : MonoBehaviour
         _interactAction.Disable();
     }
 
+    private void UpdateAnims()
+    {
+        int state = 0;
+        
+    }
+
     private void FixedUpdate()
     {
         Vector2 moveDir = _moveAction.ReadValue<Vector2>();
@@ -49,5 +58,8 @@ public class Movement : MonoBehaviour
         vel.x = moveSpeed * moveDir.x;
         vel.y = moveSpeed * moveDir.y;
         _rb.velocity = vel;
+        
+        _animator.SetFloat("Horizontal", moveDir.x);
+        _animator.SetFloat("Vertical", moveDir.y);
     }
 }
